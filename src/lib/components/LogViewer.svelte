@@ -16,6 +16,7 @@
     let showTimestamps = true;
     let showLineNumbers = true;
     let showSearchInput = false;
+    let searchInputElement;
 
     function scrollToBottom() {
         if (autoScroll && logsContainer) {
@@ -119,6 +120,10 @@
             filterLogs();
         }
     }
+
+    $: if (showSearchInput && searchInputElement) {
+        searchInputElement.focus();
+    }
 </script>
 
 <div class="log-viewer">
@@ -159,10 +164,10 @@
                             bind:value={logFilterText}
                             class="search-input"
                             on:keydown={handleKeydown}
-                            autofocus
+                            bind:this={searchInputElement}
                         />
                         {#if logFilterText}
-                            <button class="clear-search" on:click={() => { logFilterText = ''; filterLogs(); }}>
+                            <button class="clear-search" on:click={() => { logFilterText = ''; filterLogs(); }} aria-label="Clear search">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <line x1="18" y1="6" x2="6" y2="18"></line>
                                     <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -253,16 +258,6 @@
         display: flex;
         align-items: center;
         gap: 0.75rem;
-    }
-
-    .icon-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 2.25rem;
-        height: 2.25rem;
-        padding: 0;
-        border-radius: 4px;
     }
 
     .status-indicator {

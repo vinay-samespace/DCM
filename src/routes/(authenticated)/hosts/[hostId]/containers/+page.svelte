@@ -79,6 +79,9 @@
                                 class="container-card"
                                 class:selected={selectedContainer?.id === container.id}
                                 on:click={() => selectContainer(container)}
+                                on:keydown={(e) => e.key === 'Enter' && selectContainer(container)}
+                                role="button"
+                                tabindex="0"
                             >
                                 <div class="container-info">
                                     <h3>{container.name}</h3>
