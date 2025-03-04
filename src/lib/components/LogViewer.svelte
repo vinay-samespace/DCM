@@ -45,6 +45,7 @@
     }
 
     function toggleConnection() {
+        console.log('toggleConnection', isConnected);
         if (isConnected) {
             socketService.disconnect();
         } else {
@@ -136,13 +137,13 @@
             >
                 {isConnected ? 'Disconnect' : 'Connect'}
             </Button>
-
-            <div class="status-indicator" class:connected={isConnected}>
-                {isConnected ? 'Connected' : 'Disconnected'}
-            </div>
         </div>
 
         <div class="toolbar-section">
+
+            <div class="status-indicator" class:connected={isConnected}>
+                {isConnected ? '' : ''}
+            </div>
             <div class="search-container">
                 <Button 
                     variant="secondary"
@@ -261,16 +262,16 @@
     }
 
     .status-indicator {
-        padding: 0.25rem 0.5rem;
+        padding: 0.5rem ;
         border-radius: 9999px;
-        background: #fee2e2;
+        background: #ed6666;
         color: #dc2626;
         font-size: 0.75rem;
         font-weight: 500;
     }
 
     .status-indicator.connected {
-        background: #dcfce7;
+        background: #5de88e;
         color: #059669;
     }
 

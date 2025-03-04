@@ -7,12 +7,12 @@ class WebSocketService {
         this.listeners = new Map();
         this.reconnectAttempts = 0;
         this.maxReconnectAttempts = 5;
+        this.manualDisconnect = false;
     }
 
     connect(hostId, container) {
         if (!browser) return;
         
-        // Close existing connection if any
         if (this.socket) {
             this.socket.close();
             this.socket = null;
@@ -47,8 +47,7 @@ class WebSocketService {
                 this.isConnected = false;
                 this.notifyListeners('connection', { status: 'disconnected' });
 
-                // Attempt to reconnect
-                if (this.reconnectAttempts < this.maxReconnectAttempts) {
+                if (!this.manualDisconnect && this.reconnectAttempts < this.maxReconnectAttempts) {
                     this.reconnectAttempts++;
                     console.log(`Attempting to reconnect (${this.reconnectAttempts}/${this.maxReconnectAttempts})`);
                     setTimeout(() => this.connect(hostId, container), 2000);
@@ -69,6 +68,7 @@ class WebSocketService {
     disconnect() {
         if (this.socket) {
             console.log('Manually disconnecting WebSocket');
+            this.manualDisconnect = true;
             this.socket.close(1000, 'User initiated disconnect');
             this.socket = null;
             this.isConnected = false;
