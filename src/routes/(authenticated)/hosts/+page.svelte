@@ -62,7 +62,7 @@
         {:else}
             <div class="hosts-grid">
                 {#each hosts as host}
-                    <div class="host-card" on:click={() => viewContainers(host.id)}>
+                    <div class="host-card" on:click={() => viewContainers(host.id)} role="button" tabindex="0" on:keydown={(e) => e.key === 'Enter' && viewContainers(host.id)}>
                         <div class="host-header">
                             <h2>{host.hostname}</h2>
                             <span class="env">{host.env}</span>
